@@ -1,0 +1,66 @@
+# envfile
+
+**envfile** is a dependency-free Go package for parsing `.env` ("dot-env") files and manipulating their contents.
+It is developed for the job scheduler [Regular](https://github.com/dbohdan/regular) but can be used in your Go projects:
+
+```shell
+go get dbohdan.com/envfile
+```
+
+envfile is mostly compatible with [GoDotEnv](https://github.com/joho/godotenv).
+It is tested against test fixtures imported from GoDotEnv.
+The one major difference is that attempting to substitute a nonexistent variable results in an error.
+However, `.env` files have no formal specification, and differences in parsing around edge cases are to be expected.
+
+## Features
+
+- Parse `.env` files with quoted multiline values, backslash escape sequences, and comments
+- Perform optional shell-style variable substitution
+- Control substitution in the file by using either double/no quotes or single quotes
+- Merge environments
+- Convert between `[]string{"FOO=bar", ...}` and an environment map type
+
+## Examples
+
+Parse a `.env` file with variable substitution:
+
+```go
+content := strings.NewReader(`
+# Set the base directory.
+BASE=/opt
+# Use substitution.
+PATH=${BASE}/bin
+`)
+
+env, err := envfile.Parse(content, true, nil)
+// env = map[string]string{"BASE": "/opt", "PATH": "/opt/bin"}
+```
+
+Load from a file:
+
+```go
+// Use the contents of os.Environ for subtitution.
+substEnv := envfile.OS()
+env, err := envfile.Load(".env", true, substEnv)
+```
+
+Convert environment strings:
+
+```go
+// From string slice to map.
+env := envfile.EnvFromStrings([]string{"FOO=bar", "BAZ=qux"})
+
+// Back to a string slice.
+strings := env.Strings()
+```
+
+Merge multiple environments:
+
+```go
+merged := envfile.Merge(env1, env2, env3)
+```
+
+## License
+
+MIT.
+See the file [`LICENSE`](LICENSE).
