@@ -1,4 +1,4 @@
-package envfile
+package denv
 
 // These tests are derived from GoDotEnv (https://github.com/joho/godotenv) test fixtures.
 // GoDotEnv is distribured under the following license:
