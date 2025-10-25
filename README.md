@@ -1,7 +1,7 @@
 # denv
 
 **denv** ("dee-env") is a dependency-free Go package for parsing `.env` ("dot-env") files and manipulating their contents.
-It is developed for the job scheduler [Regular](https://github.com/dbohdan/regular) but can be used in your Go projects:
+Originally developed for the job scheduler [Regular](https://github.com/dbohdan/regular), it is suitable for general use in Go projects.
 
 ```shell
 go get dbohdan.com/denv
@@ -16,7 +16,7 @@ However, `.env` files have no formal specification, and differences in parsing a
 
 - Parse `.env` files with quoted multiline values, backslash escape sequences, and comments
 - Perform optional shell-style variable substitution
-- Control substitution in the file by using either double/no quotes or single quotes
+- Control substitution through quoting in the file: use double quotes or no quotes to enable it, single quotes to disable it
 - Merge environments
 - Convert between `[]string{"FOO=bar", ...}` and an environment map type
 
@@ -39,7 +39,7 @@ env, err := denv.Parse(content, true, nil)
 Load from a file:
 
 ```go
-// Use the contents of os.Environ for subtitution.
+// Use the contents of os.Environ for substitution.
 substEnv := denv.OS()
 env, err := denv.Load(".env", true, substEnv)
 ```
