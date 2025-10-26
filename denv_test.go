@@ -1,6 +1,7 @@
 package denv
 
 import (
+	"sort"
 	"strings"
 	"testing"
 )
@@ -208,13 +209,27 @@ func TestEnvStrings(t *testing.T) {
 }
 
 func mapsEqual(a, b Env) (bool, []string) {
-	diffs := []string{}
+	diffKeys := make(map[string]struct{})
 
-	for k, v := range a {
-		if bv, ok := b[k]; ok && bv != v {
-			diffs = append(diffs, k)
+	// Check if all keys in a exist in b with the same values.
+	for k, av := range a {
+		if bv, ok := b[k]; !ok || av != bv {
+			diffKeys[k] = struct{}{}
 		}
 	}
 
-	return len(diffs) == 0, diffs
+	// Check if all keys in b exist in a with the same values.
+	for k, bv := range b {
+		if av, ok := a[k]; !ok || av != bv {
+			diffKeys[k] = struct{}{}
+		}
+	}
+
+	diffKeysSorted := make([]string, 0, len(diffKeys))
+	for k := range diffKeys {
+		diffKeysSorted = append(diffKeysSorted, k)
+	}
+	sort.Strings(diffKeysSorted)
+
+	return len(diffKeysSorted) == 0, diffKeysSorted
 }

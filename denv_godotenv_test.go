@@ -107,6 +107,8 @@ func TestFixtures(t *testing.T) {
 				"OPTION_C": "3",
 				"OPTION_D": "4",
 				"OPTION_E": "5",
+				"OPTION_F": "",
+				"OPTION_G": "",
 				"OPTION_H": "1 2",
 				"OPTION_I": "foo\nbar",
 				"OPTION_J": "\t",
