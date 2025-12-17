@@ -1,5 +1,7 @@
 # denv
 
+[![Go Reference](https://pkg.go.dev/badge/dbohdan.com/denv.svg)](https://pkg.go.dev/dbohdan.com/denv)
+
 **denv** ("dee-env") is a dependency-free Go package for parsing `.env` ("dot-env") files and manipulating their contents.
 Originally developed for the job scheduler [Regular](https://github.com/dbohdan/regular), it is suitable for general use in Go projects.
 
